@@ -1,17 +1,15 @@
+import React, { useEffect, useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
-import Faq from "@/components/Faq";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import BackToTopButton from "@/components/BackToTopButton";
-import { useEffect, useState, useCallback } from "react";
 
 const Index = () => {
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState<string>("hero");
 
   const scrollTo = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -20,7 +18,7 @@ const Index = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-50% 0px -50% 0px", // When 50% of the section is in the viewport
+      rootMargin: "-50% 0px -50% 0px",
       threshold: 0,
     };
 
@@ -32,32 +30,24 @@ const Index = () => {
       });
     }, observerOptions);
 
-    const sections = document.querySelectorAll("section[id]");
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => observer.observe(section));
 
     return () => {
-      sections.forEach((section) => {
-        observer.unobserve(section);
-      });
+      sections.forEach((section) => observer.unobserve(section));
     };
   }, []);
 
   return (
-    <div className="bg-gray-50 text-gray-800 antialiased">
+    <div>
       <Navbar scrollTo={scrollTo} activeSection={activeSection} />
-      <main>
-        <Hero id="hero" scrollTo={scrollTo} />
-        <Features id="features" />
-        <HowItWorks id="how-it-works" />
-        <Testimonials id="testimonials" />
-        <Pricing id="pricing" />
-        <Faq id="faq" />
-        <Contact id="contact" />
-      </main>
-      <Footer id="footer" scrollTo={scrollTo} />
-      <BackToTopButton />
+      <Hero id="hero" scrollTo={scrollTo} />
+      <Features id="features" />
+      <HowItWorks id="how-it-works" />
+      <Testimonials id="testimonials" />
+      <Pricing id="pricing" />
+      <Contact id="contact" />
+      <Footer />
     </div>
   );
 };
